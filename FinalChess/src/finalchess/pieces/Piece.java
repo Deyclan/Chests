@@ -7,6 +7,8 @@ package finalchess.pieces;
 
 import chess.Board;
 import chess.Move;
+import chess.Position;
+import finalchess.players.Player;
 import java.util.ArrayList;
 
 /**
@@ -15,22 +17,48 @@ import java.util.ArrayList;
  */
 public abstract class Piece {
 
-    public static final boolean WHITE = true, BLACK = false;
-    private boolean color;
-    protected int value;
+    protected ArrayList<Move> posMoves = new ArrayList<Move>();
+    protected Player pieceColor;
+    protected Position currentPos;
+    protected Board board;
 
-    public Piece(boolean color) {
-        this.color = color;
-        value = 0;
+    public Piece(Player color, Position position, Board board) {
+        currentPos = position;
+        pieceColor = color;
+        this.board = board;
+    }
+    
+    //Cloning
+     public Piece(Board board, Piece other) {
+        pieceColor = other.getPieceColor();
+        this.board = board;
+        currentPos = new Position(other.getPosition());
     }
 
+    abstract protected void addAllPossibleMoves();
 
-    public boolean getColor() {
-        return color;
+    public Player getPieceColor(){
+        return pieceColor;
     }
-    public int getValue() {
-        return value;
+    
+    
+    
+    public void updateCurrentPos(Position pos){
+        this.currentPos = pos;
     }
-
-    public abstract ArrayList<Move> getMoves(Board b, int x, int y);
+    
+    public Position getPosition(){
+        return currentPos;
+    }
+    
+    protected void addMove(Position destination) {
+        Move move = new Move(currentPos, destination, this);
+        posMoves.add(move);
+    }
+    
+    public ArrayList<Move> getMoves(){
+        addAllPossibleMoves();
+        return posMoves;
+    }
+   
 }

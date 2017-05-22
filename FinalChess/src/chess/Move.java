@@ -1,24 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package chess;
 
+import finalchess.pieces.Piece;
+
 /**
- *
- * @author Nejko
+ * Initiate a moving piece, checks is it will be possible
  */
 public class Move {
-        private Position startPos;
+    private Position startPos;
     private Position endPos;
-//    private Piece movingPiece;
+    private Piece movingPiece;
     private boolean castling;
     
-    public Move(Position startPos, Position endPos/*, Piece movingPiece*/){
+    public Move(Position startPos, Position endPos, Piece movingPiece){
         this.startPos = startPos;
         this.endPos = endPos;
-    //    this.movingPiece = movingPiece;
+        this.movingPiece = movingPiece;
     }
     
     //For castling
@@ -27,6 +24,7 @@ public class Move {
         this.endPos = endPos;
         castling = true;
     }
+
     
     public Position getEndPos(){
         return endPos;
@@ -35,13 +33,13 @@ public class Move {
         return startPos;
     }
     
-//    public Piece getMovingPiece(){
-//        return movingPiece;
-//    }
-//    
-//    public void setMovingPiece(Piece piece){
-//        movingPiece = piece;
-//    }
+    public Piece getMovingPiece(){
+        return movingPiece;
+    }
+    
+    public void setMovingPiece(Piece piece){
+        movingPiece = piece;
+    }
     
     @Override
     public String toString(){

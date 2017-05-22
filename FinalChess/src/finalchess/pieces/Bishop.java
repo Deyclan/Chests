@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package finalchess.pieces;
 
 /**
- *
- * @author Nejko
+ * Bishops - moves/characteristics
+ * can move any number of squares diagonally;
+ * cannot move past any piece that is obstructing its path;
+ * can take any other piece on the board that is within its bounds of movement;
  */
 public class Bishop {
     

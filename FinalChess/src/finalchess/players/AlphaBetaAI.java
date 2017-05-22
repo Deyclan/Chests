@@ -6,7 +6,7 @@
 package finalchess.players;
 
 /**
- *
+ * An AI player
  * @author Nejko
  */
 public class AlphaBetaAI {

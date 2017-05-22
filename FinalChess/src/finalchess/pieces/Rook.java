@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package finalchess.pieces;
 
 /**
- *
- * @author Nejko
+ * Rooks - moves/characteristics
+ * can move any number of squares, up and down and side to side;
+ * can move anywhere from 1 to 7 squares in any direction, so long as it is not obstructed by any other piece from its own team;
+ * can participate in a "castling" move with the King piece.
  */
 public class Rook {
     
