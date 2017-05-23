@@ -102,12 +102,6 @@ public class King extends Piece {
         addMove(kingSideTower);
     }
 
-    private void checkSpace(Position pos) {
-        if (board.containsEnemy(currentPos, pos)) {
-            addMove(pos);
-        } else if (board.isFree(pos)) {
-            addMove(pos);
-        }
-    }
+
 
 }
