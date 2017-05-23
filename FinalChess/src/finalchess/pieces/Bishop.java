@@ -1,7 +1,9 @@
 
 package finalchess.pieces;
 
+import chess.Board;
 import chess.Position;
+import finalchess.players.Player;
 
 /**
  * Bishops - moves/characteristics
@@ -12,7 +14,7 @@ import chess.Position;
 public class Bishop extends Piece{
 
     public Bishop(Player color, Position pos, Board board){super(color, pos, board);}
-    public King(Board board, Piece other){super(board, other);}
+    public Bishop(Board board, Piece other){super(board, other);}
 
     @Override
     public void updateCurrentPos(Position pos){
