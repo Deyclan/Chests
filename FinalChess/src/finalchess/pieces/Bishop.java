@@ -23,10 +23,19 @@ public class Bishop extends Piece{
     protected void addAllPossibleMoves(){
         posMoves.clear();
 
-        //N-W
         for(int i = 1; i < 9; i++){
-            Position pos = new Position(currentPos.getRow() + 1, currentPos.getColumn() -1 );
+            //N-W
+            Position pos = new Position(currentPos.getRow() + i, currentPos.getColumn() - i );
             checkSpace(pos);
+            //N-E
+            Position pos2 = new Position(currentPos.getRow() + i, currentPos.getColumn() + i);
+            checkSpace(pos2);
+            //S-E
+            Position pos3 = new Position(currentPos.getRow() - i, currentPos.getColumn() + i);
+            checkSpace(pos3);
+            //S-W
+            Position pos4 = new Position(currentPos.getRow() - i, currentPos.getColumn() - i);
+            checkSpace(pos4);
         }
     }
 }
