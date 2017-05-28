@@ -22,7 +22,7 @@ public class Bishop extends Piece{
     }
 
     @Override
-    protected void addAllPossibleMoves(){
+    public void addAllPossibleMoves(){
         posMoves.clear();
 
         for(int i = 1; i < 9; i++){

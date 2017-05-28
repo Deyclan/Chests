@@ -31,7 +31,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected void addAllPossibleMoves() {
+    public void addAllPossibleMoves() {
         posMoves.clear();
         //1 s + 1w
         Position pos = new Position(currentPos.getRow() - 1, currentPos.getColumn() - 1);

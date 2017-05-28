@@ -10,12 +10,20 @@ public class Move {
     private Position startPos;
     private Position endPos;
     private Piece movingPiece;
+    private Piece killedPiece;
     private boolean castling;
+    private int reward;
     
-    public Move(Position startPos, Position endPos, Piece movingPiece){
+    public Move(Position startPos, Position endPos, Piece movingPiece, Board board){
         this.startPos = startPos;
         this.endPos = endPos;
         this.movingPiece = movingPiece;
+
+        if (board.containedEnemy(startPos,endPos) != null){
+            this.reward = board.containedEnemy(startPos,endPos).getReward();
+        }
+        else
+            this.reward = 0;
     }
     
     //For castling
@@ -24,6 +32,8 @@ public class Move {
         this.endPos = endPos;
         castling = true;
     }
+
+    public Move(){}
 
     
     public Position getEndPos(){
@@ -51,5 +61,13 @@ public class Move {
         char letter = (char) (pos.getColumn() + 65);
         String result = letter + "" + (pos.getRow()+1);
         return result;        
+    }
+
+    public int getReward() {
+        return reward;
+    }
+
+    public void setReward(int reward) {
+        this.reward = reward;
     }
 }

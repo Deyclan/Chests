@@ -6,5 +6,11 @@ package finalchess.players;
  * @author Nejko
  */
 public abstract class Player {
+
+    private boolean color;
+
+    public Player() { }
+
+
     
 }
