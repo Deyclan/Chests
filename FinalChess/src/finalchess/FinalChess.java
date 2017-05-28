@@ -8,6 +8,8 @@
  */
 package finalchess;
 
+import finalchess.interfaces.ChessBoardController;
+
 /**
  * Main class which will init the game
  */
@@ -17,5 +19,10 @@ public class FinalChess {
     public static void main(String[] args) {
         
     }
+    private ChessBoardController observer;
+
+    public void setObserver(ChessBoardController chessController) {
+		this.observer = chessController;
+	}
     
 }

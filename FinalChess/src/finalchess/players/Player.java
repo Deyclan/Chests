@@ -7,4 +7,16 @@ package finalchess.players;
  */
 public abstract class Player {
     
+    protected boolean color;
+    public static final boolean WHITE=true, BLACK=false;
+        
+	public Player(boolean color) {
+		this.color = color;
+	}
+        public boolean getColor() {
+		return color;
+	}
+        public void setColor(boolean color){
+            this.color = color;
+        }
 }

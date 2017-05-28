@@ -1,7 +1,7 @@
 
 package chess;
 
-import finalchess.pieces.Piece;
+import finalchess.pieces.*;
 import finalchess.players.Player;
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class Board {
 
     private Piece pieces[][];
+    public static final int a=0, b=1, c=2, d=3, e=4, f=5, g=6, h=7;
 
     private Position whiteKingPosition;
     private Position blackKingPosition;
@@ -18,7 +19,13 @@ public class Board {
     private ArrayList<Piece> blackPieces;
     private ArrayList<Piece> whitePieces;
 
-    public Board() { }
+    
+    public Board(Piece[][] tiles) {
+		this.pieces = tiles;
+	}
+    
+    
+    
 
     public boolean containsEnemy(Position startPos, Position endPos) {
         if (isOutOfBounds(endPos)) {

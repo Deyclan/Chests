@@ -60,11 +60,6 @@ public class King extends Piece {
     }
 
     private void checkCastling() {
-        queenSideCastling();
-        kingSideCastling();
-    }
-
-    private void queenSideCastling() {
         if (hasMoved) { return; }
         for (int column = 4; column < 7; column++) {
             Position pos = new Position(currentPos.getRow(), column);
@@ -79,29 +74,5 @@ public class King extends Piece {
         if (!board.isUnmovedTower(queenSideTower)) { return; }
         addMove(queenSideTower);
     }
-
-    private void kingSideCastling() {
-        if (hasMoved) {
-            return;
-        }
-        for (int column = 2; column > 0; column--) {
-            Position pos = new Position(currentPos.getRow(), column);
-            if (!board.isFree(pos)) {
-                return;
-            }
-        }
-
-        Position kingSideTower = new Position(currentPos.getRow(), 0);
-        if (board.containsEnemy(currentPos, kingSideTower)) {
-            return;
-        }
-
-        if (!board.isUnmovedTower(kingSideTower)) {
-            return;
-        }
-        addMove(kingSideTower);
-    }
-
-
 
 }
