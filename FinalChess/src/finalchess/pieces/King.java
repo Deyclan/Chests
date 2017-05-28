@@ -19,7 +19,6 @@ public class King extends Piece {
     public King(Player color, Position pos, Board board) {
         super(color, pos, board);
     }
-
     public King(Board board, Piece other) {
         super(board, other);
     }
