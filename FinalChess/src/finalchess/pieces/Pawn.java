@@ -19,10 +19,12 @@ public class Pawn extends Piece {
 
     public Pawn(Player color, Position position, Board board) {
         super(color, position, board);
+        this.reward = 1;
     }
 
     public Pawn(Board board, Piece other) {
         super(board, other);
+        this.reward = 1;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected void addAllPossibleMoves() {
+    public void addAllPossibleMoves() {
         posMoves.clear();
 
         Position pos;

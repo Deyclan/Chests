@@ -21,6 +21,7 @@ public abstract class Piece {
     protected Player pieceColor;
     protected Position currentPos;
     protected Board board;
+    protected int reward;
 
     public Piece(Player color, Position position, Board board) {
         currentPos = position;
@@ -35,7 +36,7 @@ public abstract class Piece {
         currentPos = new Position(other.getPosition());
     }
 
-    abstract protected void addAllPossibleMoves();
+    abstract public void addAllPossibleMoves();
 
     public Player getPieceColor(){
         return pieceColor;
@@ -52,7 +53,7 @@ public abstract class Piece {
     }
     
     protected void addMove(Position destination) {
-        Move move = new Move(currentPos, destination, this);
+        Move move = new Move(currentPos, destination, this,board);
         posMoves.add(move);
     }
     
@@ -68,5 +69,33 @@ public abstract class Piece {
             addMove(pos);
         }
     }
-   
+
+    public int getReward() {
+        return reward;
+    }
+
+    public Move bestMove(){
+        int maxMove = Integer.MIN_VALUE;
+        Move tempMove = posMoves.get(0);
+        for (Move move: posMoves) {
+            if (move.getReward() > maxMove){
+                maxMove = move.getReward();
+                tempMove = move;
+            }
+        }
+        return tempMove;
+    }
+
+    public Move worstMove(){
+        int minMove = Integer.MAX_VALUE;
+        Move tempMove = posMoves.get(0);
+        for (Move move: posMoves) {
+            if (move.getReward() < minMove){
+                minMove = move.getReward();
+                tempMove = move;
+            }
+        }
+        return tempMove;
+    }
+
 }

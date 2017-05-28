@@ -57,4 +57,37 @@ public class Board {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Piece containedEnemy(Position startPos, Position endPos){
+        if (containsEnemy(startPos,endPos)){
+            return pieces[endPos.getRow()][endPos.getColumn()];
+        }
+        return null;
+    }
+
+    public ArrayList<Piece> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public ArrayList<Piece> getWhitePieces() {
+        return whitePieces;
+    }
+
+    /**
+     *
+     * @param color : White = True, Black = False
+     * @return Corresponding ArrayList of Piece
+     */
+    public ArrayList<Piece> getPiecesToPlay(boolean color){
+        if (color){
+            return getWhitePieces();
+        }
+        else return getBlackPieces();
+    }
+
+    public void makeMove(Move move){
+        move.getMovingPiece().updateCurrentPos(move.getEndPos());
+    }
+    public void undoMove(Move move){
+        move.getMovingPiece().updateCurrentPos(move.getStartPos());
+    }
 }

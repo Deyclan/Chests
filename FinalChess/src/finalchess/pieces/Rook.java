@@ -23,7 +23,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected void addAllPossibleMoves() {
+    public void addAllPossibleMoves() {
         posMoves.clear();
         for(int i = 1; i < 9; i++){
             //N
@@ -46,5 +46,4 @@ public class Rook extends Piece {
         this.currentPos = pos;
         hasMoved = true;
     }
-
 }

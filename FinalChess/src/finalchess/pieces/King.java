@@ -19,7 +19,6 @@ public class King extends Piece {
     public King(Player color, Position pos, Board board) {
         super(color, pos, board);
     }
-
     public King(Board board, Piece other) {
         super(board, other);
     }
@@ -31,7 +30,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected void addAllPossibleMoves() {
+    public void addAllPossibleMoves() {
         posMoves.clear();
         //1 s + 1w
         Position pos = new Position(currentPos.getRow() - 1, currentPos.getColumn() - 1);
