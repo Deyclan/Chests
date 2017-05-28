@@ -52,14 +52,14 @@ public class Main extends Application {
         launch(args);
     }
 
-    public void playChess() {
+    public void playChess(int difficulty) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("interfaces/ChessBoard.fxml"));
-            AnchorPane tetris = (AnchorPane) loader.load();
-            this.primaryStage.setScene(new Scene(tetris));
+            AnchorPane chess = (AnchorPane) loader.load();
+            this.primaryStage.setScene(new Scene(chess));
 
-            Chess game = new Chess();
+            Chess game = new Chess(difficulty);
 
             ChessBoardController controller = loader.getController();
             controller.setMain(this);
@@ -68,7 +68,7 @@ public class Main extends Application {
             controller.init();
             game.run();
         } catch (IOException e) {
-            System.out.println("Failed to open Tetris : /n"+e);
+            System.out.println("Failed to open Chess : /n"+e);
         }
     }
 

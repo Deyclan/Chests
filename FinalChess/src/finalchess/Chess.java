@@ -8,8 +8,10 @@
  */
 package finalchess;
 
+import chess.Board;
 import finalchess.interfaces.ChessBoardController;
-import javafx.animation.Animation;
+import finalchess.pieces.Piece;
+import finalchess.players.AlphaBetaAI;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -21,6 +23,23 @@ public class Chess {
 
     private ChessBoardController observer;
     private boolean isOver;
+    private AlphaBetaAI aiChess;
+    private Board board;
+
+    Chess(int difficulty) {
+        this.board = new Board(new Piece[8][8]);
+    
+        switch (difficulty) {
+            case 0:  aiChess = new AlphaBetaAI(false, board, difficulty);
+                     break;
+            case 1:  aiChess = new AlphaBetaAI(false, board, difficulty);
+                     break;         
+            case 2:  aiChess = new AlphaBetaAI(false, board, difficulty);
+                     break;
+            default: aiChess = new AlphaBetaAI(false, board, 1);
+                     break;
+        }
+    }
 
     public void run() {
 
