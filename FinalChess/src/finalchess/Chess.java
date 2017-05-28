@@ -9,20 +9,31 @@
 package finalchess;
 
 import finalchess.interfaces.ChessBoardController;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  * Main class which will init the game
  */
-public class FinalChess {
+public class Chess {
 
-
-    public static void main(String[] args) {
-        
-    }
     private ChessBoardController observer;
+    private boolean isOver;
+
+    public void run() {
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(1000)));
+        timeline.play();
+    }
 
     public void setObserver(ChessBoardController chessController) {
-		this.observer = chessController;
-	}
-    
+        this.observer = chessController;
+    }
+
+    public boolean isGameOver() {
+        return isOver; //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

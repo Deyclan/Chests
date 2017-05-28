@@ -6,11 +6,15 @@
 package finalchess;
 
 import finalchess.interfaces.ChessBoardController;
+import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -49,12 +53,23 @@ public class Main extends Application {
     }
 
     public void playChess() {
-        ChessBoardController game = new ChessBoardController(new Group(), 600, 400, this);
-        this.primaryStage.setScene(game);
-        Timeline timeline = new Timeline(new KeyFrame(
-                Duration.millis(1000),
-                ae -> game.start()));
-        timeline.play();
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("interfaces/ChessBoard.fxml"));
+            AnchorPane tetris = (AnchorPane) loader.load();
+            this.primaryStage.setScene(new Scene(tetris));
+
+            Chess game = new Chess();
+
+            ChessBoardController controller = loader.getController();
+            controller.setMain(this);
+            controller.setGame(game);
+
+            controller.init();
+            game.run();
+        } catch (IOException e) {
+            System.out.println("Failed to open Tetris : /n"+e);
+        }
     }
 
 }

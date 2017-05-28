@@ -6,7 +6,7 @@
 package finalchess.interfaces;
 
 import chess.Board;
-import finalchess.FinalChess;
+import finalchess.Chess;
 import finalchess.Main;
 import finalchess.pieces.*;
 import finalchess.players.*;
@@ -42,7 +42,7 @@ import javafx.util.Duration;
  */
 public class ChessBoardController implements Initializable {
 
-    private FinalChess game;
+    private Chess game;
     private Main main;
     public Board boardM = null;
     public Player currentPlayer;
@@ -74,28 +74,7 @@ public class ChessBoardController implements Initializable {
     public void init() {
         game.setObserver(this);
 
-        // Configuration de la grille de jeu
-        gridView.setStyle("-fx-border-color:grey");
-
-        double height = gridView.getPrefHeight() / game.getGrid().length;
-        double width = gridView.getPrefWidth() / game.getGrid()[0].length;
-
-        labels = new Label[game.getGrid().length][game.getGrid()[0].length];
-
-        for (int i = 0; i < game.getGrid().length; i++) {               //affiche les textes (labels)
-            for (int j = 0; j < game.getGrid()[0].length; j++) {
-                Label label = new Label();
-                label.setPrefHeight(height);
-                label.setPrefWidth(width);
-                label.setAlignment(Pos.CENTER);
-
-                gridView.setRowIndex(label, i);
-                gridView.setColumnIndex(label, j);
-                gridView.getChildren().add(label);
-
-                labels[i][j] = label;
-            }
-        }
+        
 
         this.update();
     }
@@ -104,32 +83,15 @@ public class ChessBoardController implements Initializable {
 
         //Si la partie est finie, affiche une page game over
         if (game.isGameOver()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Tetris");
-            alert.setHeaderText("GAME OVER");
-            alert.show();
+            endGame();
         } else {
 
-            //actualise la grille de jeu
-            for (int i = 0; i < game.getGrid().length; i++) {
-                for (int j = 0; j < game.getGrid()[0].length; j++) {
-                    if (game.getGrid()[i][j] != null) {
-                        labels[i][j].setStyle(
-                                "-fx-border-color:grey;-fx-background-color:" + game.getGrid()[i][j].getColor() + ";");
-                    } else {
-                        labels[i][j].setStyle("");
-                    }
-                }
-            }
+            //actualise le jeu
+            
 
-            //actualise la grille de la prochaine piece
-            boardMoves.addRow(1, new Label("" + turn));
-            if (currentPlayer.getColor() == WHITE) //isWhite
-            {
-                boardMoves.add(new Label(userInput), 1, turn);
-            } else {
-                boardMoves.add(new Label("2a 5a"), 2, turn);
-            }
+            //actualise les infos
+            currentPlayerString.setText(currentPlayer.toString());
+            
         }
     }
 
@@ -137,7 +99,7 @@ public class ChessBoardController implements Initializable {
         this.main = main;
     }
 
-    public void setGame(Tetris game) {
+    public void setGame(Chess game) {
         this.game = game;
     }
 
@@ -188,9 +150,6 @@ public class ChessBoardController implements Initializable {
         if (currentPlayer.getColor() == WHITE) {
             turn++;
         }
-
-        // AFTER (SET)
-        currentPlayerString.setText(currentPlayer.toString());
 
     }
 
