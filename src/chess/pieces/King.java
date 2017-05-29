@@ -1,23 +1,14 @@
-/**
- * 
- */
 package chess.pieces;
 
 import java.util.ArrayList;
-
 import chess.Board;
 import chess.Move;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class King extends Piece {
 	boolean hasMoved = false;
 
-	/**
-	 * 
-	 */
+
 	public King(boolean color) {
 		super(color);
 		value = 0;
@@ -29,10 +20,12 @@ public class King extends Piece {
 		value = 0;
 	}
 	
+        @Override
 	public King clone() {
 		return new King(color, hasMoved);
 	}
 	
+        @Override
 	public String toString() {
 		if(color == Piece.WHITE)
 			return "K";
@@ -40,8 +33,9 @@ public class King extends Piece {
 			return "k";
 	}
 
+        @Override
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> moves = new ArrayList<>();
 		
 		// N
 		if(valid(x, y+1) && 

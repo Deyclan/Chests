@@ -1,24 +1,15 @@
-/**
- * 
- */
+
 package chess.player;
 
 
 import chess.Move;
 import chess.Board;
-import chess.player.Player;
 import chess.minimax.*;
 
-/**
- * @author Gunnar Atli
- *
- */
 public class AlphaBetaPlayer extends Player {
 	MinimaxAlphaBeta minimax;
 	
-	/**
-	 * @param color
-	 */
+
 	public AlphaBetaPlayer(boolean color, int maxDepth) {
 		super(color);
 		minimax = new MinimaxAlphaBeta(color, maxDepth);
@@ -32,6 +23,7 @@ public class AlphaBetaPlayer extends Player {
 	 *            the board to parse
 	 * @return the selected move
 	 */
+        @Override
 	public Move getNextMove(Board b) {
 		Move move = minimax.decision(b);
 		return move;

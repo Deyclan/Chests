@@ -22,20 +22,17 @@ public abstract class Piece {
 		return value;
 	}
 	
+        @Override
 	public abstract Piece clone();
 	
 	public abstract ArrayList<Move> getMoves(Board b, int x, int y);
 	
 	/**
-	 * @param b Board
 	 * @param x x location of piece
 	 * @param y y location of piece
 	 * @return
 	 */
 	static public boolean valid(int x, int y) {
-		if(x < 0 || x > 7 || y < 0 || y > 7)
-			return false;
-		else
-			return true;
+            return !(x < 0 || x > 7 || y < 0 || y > 7);
 	}
 }

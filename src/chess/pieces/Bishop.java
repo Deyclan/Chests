@@ -1,17 +1,10 @@
-/**
- * 
- */
+
 package chess.pieces;
 
 import java.util.ArrayList;
-
 import chess.*;
 
 
-/**
- * @author Gunnar Atli
- *
- */
 public class Bishop extends Piece {
 
 	public Bishop(boolean color) {
@@ -19,6 +12,7 @@ public class Bishop extends Piece {
 		value = 3;
 	}
 	
+        @Override
 	public String toString() {
 		if(color == Piece.WHITE)
 			return "B";
@@ -26,12 +20,14 @@ public class Bishop extends Piece {
 			return "b";
 	}
 	
+        @Override
 	public Bishop clone() {
 		return new Bishop(color);
 	}
 
+        @Override
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> moves = new ArrayList<>();
 		
 		
 		// NE

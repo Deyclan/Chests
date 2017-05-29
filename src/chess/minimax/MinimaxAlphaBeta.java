@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package chess.minimax;
 
 import java.util.ArrayList;
@@ -16,18 +14,13 @@ import chess.Move;
 import chess.Tile;
 import chess.pieces.Piece;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class MinimaxAlphaBeta {
 
 	boolean color;
 	int maxDepth;
 	Random rand;
-	/**
-	 * 
-	 */
+
 	public MinimaxAlphaBeta(boolean color, int maxDepth) {
 		this.color = color;
 		this.maxDepth = maxDepth;
@@ -39,7 +32,7 @@ public class MinimaxAlphaBeta {
 			return eval1(b, state, color);
 		
 		ArrayList<Move> moves = b.getMovesAfter(color, state);
-		if(moves.size() == 0) // TODO add draw
+		if(moves.isEmpty()) // TODO add draw
 			return Float.NEGATIVE_INFINITY;
 		
 		for(int i = 0; i < moves.size(); i++) {
@@ -68,7 +61,7 @@ public class MinimaxAlphaBeta {
 			return eval1(b, state, !color);
 		
 		ArrayList<Move> moves = b.getMovesAfter(!color, state);
-		if(moves.size() == 0) // TODO add draw
+		if(moves.isEmpty()) // TODO add draw
 			return Float.POSITIVE_INFINITY;
 		
 		for(int i = 0; i < moves.size(); i++) {
@@ -97,27 +90,23 @@ public class MinimaxAlphaBeta {
 		// get maximum move
 		
 		final ArrayList<Move> moves = b.getMoves(color);
-		if(moves.size() == 0)
+		if(moves.isEmpty())
 			return null;
  		
-		Vector<Future<Float>> costs = new Vector<Future<Float>>(moves.size());
+		Vector<Future<Float>> costs = new Vector<>(moves.size());
 		costs.setSize(moves.size());
 		
  		ExecutorService exec = Executors.newFixedThreadPool(moves.size());
  		try {
  		    for (int i = 0; i < moves.size(); i++) {
  		    	final Move move = moves.get(i);
- 		        Future<Float> result = exec.submit(new Callable<Float>() {
-
- 		            @Override
- 		            public Float call() {
- 		            	ArrayList<Move> state = new ArrayList<Move>();
- 		            	state.add(move);
- 		            	
- 		            	float tmp = minValue(b, state, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 1);
- 		            	return tmp;
- 		            }
- 		        });
+ 		        Future<Float> result = exec.submit(() -> {
+                            ArrayList<Move> state = new ArrayList<>();
+                            state.add(move);
+                            
+                            float tmp = minValue(b, state, Float.NEGATIVE_INFINITY, Float.POSITIVE_INFINITY, 1);
+                            return tmp;
+                             });
  		        costs.set(i, result);
  		    }
  		} finally {
@@ -155,7 +144,7 @@ public class MinimaxAlphaBeta {
 		// get maximum move
 		
 		ArrayList<Move> moves = b.getMoves(color);
-		ArrayList<Move> state = new ArrayList<Move>();
+		ArrayList<Move> state = new ArrayList<>();
 		float[] costs = new float[moves.size()];
  		for(int i = 0; i < moves.size(); i++) {
 			state.add(moves.get(i));
@@ -240,7 +229,7 @@ public class MinimaxAlphaBeta {
 	private float eval1(Board b, ArrayList<Move> moves, boolean currentColor) {
 		Tile[][] tiles = b.getTilesAfter(moves);
 		
-		if(b.getMoves(currentColor).size() == 0) {
+		if(b.getMoves(currentColor).isEmpty()) {
 			if(b.isCheckAfter(currentColor, moves))
 				return (currentColor == this.color) ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
 			else

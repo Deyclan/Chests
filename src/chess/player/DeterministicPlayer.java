@@ -1,25 +1,16 @@
-/**
- * 
- */
+
 package chess.player;
 
 import java.util.ArrayList;
-
-
 import chess.Move;
 import chess.Board;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class DeterministicPlayer extends Player {
+    
 	int count;
 	
 	
-	/**
-	 * @param color
-	 */
 	public DeterministicPlayer(boolean color) {
 		super(color);
 		count = 0;
@@ -34,6 +25,7 @@ public class DeterministicPlayer extends Player {
 	 *            the board to parse
 	 * @return the selected move
 	 */
+        @Override
 	public Move getNextMove(Board b) {
 		ArrayList<Move> moves = b.getMoves(color);
 		int n = moves.size();

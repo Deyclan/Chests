@@ -1,19 +1,11 @@
-/**
- * 
- */
 package chess;
 
-/**
- * @author Gunnar Atli
- *
- */
 public class Move {
-	private int x1, y1, x2, y2;
+	private int x1, y1, 
+                x2, y2;
 	private boolean castling = false;
 
-	/**
-	 * 
-	 */
+
 	public Move(int x1, int y1, int x2, int y2) {
 		this.x1 = x1;
 		this.y1 = y1;
@@ -65,18 +57,15 @@ public class Move {
 		return castling;
 	}
 	
+        @Override
 	public String toString(){ // TODO change to a1 to b4 etc
 		//return x1 + " " + y1 + " " + x2 + " " + y2;
 		return (char)('A'+x1) + "" + (y1+1) + " " + (char)('A'+x2) + "" + (y2+1);
 	}
 	
+        @Override
 	public boolean equals(Object o){
-		Move op = (Move) o;
-		
-		if(op.getX1() == x1 && op.getY1() == y1 && op.getX2() == x2 && op.getY2() == y2){
-			return true;
-		}
-		else
-			return false;
+		Move op = (Move) o;		
+            return op.getX1() == x1 && op.getY1() == y1 && op.getX2() == x2 && op.getY2() == y2;
 	}
 }

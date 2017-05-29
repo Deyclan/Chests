@@ -1,27 +1,20 @@
-/**
- * 
- */
+
 package chess.pieces;
 
 import java.util.ArrayList;
-
 import chess.Board;
 import chess.Move;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Rook extends Piece {
 
-	/**
-	 * 
-	 */
+
 	public Rook(boolean color) {
 		super(color);
 		value = 5;
 	}
 
+        @Override
 	public String toString() {
 		if(color == Piece.WHITE)
 			return "R";
@@ -29,13 +22,15 @@ public class Rook extends Piece {
 			return "r";
 	}
 	
+        @Override
 	public Rook clone() {
 		return new Rook(color);
 	}
 	
 	
+        @Override
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> moves = new ArrayList<>();
 		
 		// up
 		for(int i = 1; i < 8; i++) {

@@ -1,31 +1,24 @@
-/**
- * 
- */
 package chess;
 
 import chess.pieces.*;
-import chess.Tile;
 import java.util.ArrayList;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Board {
 	public static final int a=0, b=1, c=2, d=3, e=4, f=5, g=6, h=7;
 	
 	private Tile[][] tiles;
 	/**	
-	 * 	 8	r n b q k b n r 
-	 *	 7	p p p p p p p p 
-	 *	 6	. . . . . . . . 
-	 *	 5	. . . . . . . . 
-	 *	 4	. . . . . . . . 
-	 *	 3	. . . . . . . . 
-	 *	 2	P P P P P P P P 
-	 *	 1  R N B Q K B N R
+	 * 	 8  r . b . k . n . 
+	 *	 7  . p . p . p . p 
+	 *	 6  p . p . p . p . 
+	 *	 5  . . . . . . . . 
+	 *	 4  . . . . . . . . 
+	 *	 3  P . P . P . P . 
+	 *	 2  . P . P . P . P 
+	 *	 1  R . B . K . N .
 	 *    	
-	 *    	a b c d e f g h
+	 *          a b c d e f g h
 	 *    
 	 * P=pawn, K=king, Q=queen, R=rook, N=knight, B=Bishop
 	 * Uppercase is white
@@ -35,54 +28,52 @@ public class Board {
 		this.tiles = tiles;
 	}
 
-	/**
-	 * 
-	 */
+
 	public Board() {
 		// initialize board
+                //WHITE
 		boolean co = Piece.WHITE;
 		tiles = new Tile[8][8];
-		tiles[a][1-1] = new Tile(new Rook(co));
-		tiles[b][1-1] = new Tile(new Knight(co));
-		tiles[c][1-1] = new Tile(new Bishop(co));
-		tiles[d][1-1] = new Tile(new Queen(co));
-		tiles[e][1-1] = new Tile(new King(co));
-		tiles[f][1-1] = new Tile(new Bishop(co));
-		tiles[g][1-1] = new Tile(new Knight(co));
-		tiles[h][1-1] = new Tile(new Rook(co));
+		tiles[a][0] = new Tile(new Rook(co));
+                tiles[b][0] = new Tile();
+		tiles[c][0] = new Tile(new Bishop(co));
+                tiles[d][0] = new Tile();
+		tiles[e][0] = new Tile(new King(co));
+                tiles[f][0] = new Tile();
+		tiles[g][0] = new Tile(new Knight(co));
+                tiles[h][0] = new Tile();
 		
-		for(int i = 0; i < 8; i++) {
-			tiles[i][2-1] = new Tile(new Pawn(co));
+		for(int i = 0; i < 8; i=i+2) {
+			tiles[i][2] = new Tile(new Pawn(co));
+                        tiles[i+1][2] = new Tile();
+                        tiles[i+1][1] = new Tile(new Pawn(co));
+                        tiles[i][1] = new Tile();
 		}
 		
-		for(int i = 2; i < 7; i++) {
+		for(int i = 3; i < 5; i++) {
 			for(int j = 0; j < 8; j++) {
 				tiles[j][i] = new Tile();
 			}
 		}
-		
+		//BLACK
 		co = Piece.BLACK;
-		tiles[a][8-1] = new Tile(new Rook(co));
-		tiles[b][8-1] = new Tile(new Knight(co));
-		tiles[c][8-1] = new Tile(new Bishop(co));
-		tiles[d][8-1] = new Tile(new Queen(co));
-		tiles[e][8-1] = new Tile(new King(co));
-		tiles[f][8-1] = new Tile(new Bishop(co));
-		tiles[g][8-1] = new Tile(new Knight(co));
-		tiles[h][8-1] = new Tile(new Rook(co));
+		tiles[a][7] = new Tile(new Rook(co));
+                tiles[b][7] = new Tile();
+		tiles[c][7] = new Tile(new Bishop(co));
+                tiles[d][7] = new Tile();
+		tiles[e][7] = new Tile(new King(co));
+                tiles[f][7] = new Tile();
+		tiles[g][7] = new Tile(new Knight(co));
+                tiles[h][7] = new Tile();
 		
-		for(int i = 0; i < 8; i++) {
-			tiles[i][7-1] = new Tile(new Pawn(co));
+		for(int i = 0; i < 8; i=i+2) {
+			tiles[i+1][6] = new Tile(new Pawn(co));
+                        tiles[i][6] = new Tile();
+                        tiles[i][5] = new Tile(new Pawn(co));
+                        tiles[i+1][5] = new Tile();
 		}
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Board b = new Board();
-		System.out.println(b);
-	}
 	
 	public String toString() {
 		String str = "";
@@ -294,10 +285,10 @@ public class Board {
 		
 		// pawn at top?
 		if(oldTile.getPiece().toString().equals("P") && m.getY2() == 8-1)
-			tiles[m.getX2()][m.getY2()] = new Tile(new Queen(Piece.WHITE));
+			tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.WHITE));
 		
 		if(oldTile.getPiece().toString().equals("p") && m.getY2() == 1-1)
-			tiles[m.getX2()][m.getY2()] = new Tile(new Queen(Piece.BLACK));
+			tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.BLACK));
 		
 		return 0;
 	}

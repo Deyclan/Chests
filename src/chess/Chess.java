@@ -1,16 +1,10 @@
-/**
- * 
- */
 package chess;
 
 import chess.player.*;
 import chess.pieces.*;
 
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Chess {
 	
 	public static void main(String[] args) {
@@ -19,11 +13,10 @@ public class Chess {
 		int draw = 0;
 		for(int i = 0; i < iter; i++) {
 			Board board = new Board();
-			//System.out.println(board.toString());
-			Player player1 = new AlphaBetaPlayer(Piece.WHITE,2);
+			Player player1 = new AlphaBetaPlayer(Piece.WHITE,3);
 			//Player player2 = new RandomPlayer(Piece.BLACK);
-			Player player2 = new AlphaBetaPlayer(Piece.BLACK,1);
 			//Player player2 = new DeterministicPlayer(Piece.BLACK);
+			Player player2 = new AlphaBetaPlayer(Piece.BLACK,0);
 			
 			int winner = play(player1, player2, board);
 			

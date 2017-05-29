@@ -3,22 +3,12 @@ package chess.player;
 import chess.Move;
 import chess.Board;
 
-/**
- * Player <br>
- * A generic player of the konane game
- * 
- * @author James Gettinger
- * 
- */
+
 public abstract class Player {
 
 	protected boolean color;
-	/**
-	 * Default constructor
-	 * 
-	 * @param color
-	 *            the player's color
-	 */
+
+        
 	public Player(boolean color) {
 		this.color = color;
 	}

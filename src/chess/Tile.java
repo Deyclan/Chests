@@ -1,21 +1,13 @@
-/**
- * 
- */
 package chess;
 
 import chess.pieces.Piece;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Tile {
 	private boolean occupied;
 	private Piece piece;
 
-	/**
-	 * 
-	 */
+
 	public Tile() {
 		occupied = false;
 	}
@@ -30,6 +22,7 @@ public class Tile {
 		this.piece = piece;
 	}
 	
+        @Override
 	public String toString() {
 		if(occupied)
 			return piece.toString();

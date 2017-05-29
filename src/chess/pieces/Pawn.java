@@ -1,30 +1,25 @@
-/**
- * 
- */
+
 package chess.pieces;
 
 import chess.Board;
 import chess.Move;
 import java.util.ArrayList;
 
-/**
- * @author Gunnar Atli 
- *
- */
+
 public class Pawn extends Piece {
 
-	/**
-	 * 
-	 */
+    
 	public Pawn(boolean color) {
 		super(color);
 		value = 1;
 	}
 	
+        @Override
 	public Pawn clone() {
 		return new Pawn(color);
 	}
 
+        @Override
 	public String toString() {
 		if(color == Piece.WHITE)
 			return "P";
@@ -38,8 +33,9 @@ public class Pawn extends Piece {
 	 * @param y y location of piece
 	 * @return
 	 */
+        @Override
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> moves = new ArrayList<>();
 		
 		if(color == Piece.WHITE) {
 			// forward

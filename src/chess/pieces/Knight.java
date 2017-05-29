@@ -1,31 +1,24 @@
-/**
- * 
- */
 package chess.pieces;
 
 import java.util.ArrayList;
-
 import chess.Board;
 import chess.Move;
 
-/**
- * @author Gunnar Atli
- *
- */
+
 public class Knight extends Piece {
 
-	/**
-	 * 
-	 */
+    
 	public Knight(boolean color) {
 		super(color);
 		value = 3;
 	}
 	
+        @Override
 	public Knight clone() {
 		return new Knight(color);
 	}
 
+        @Override
 	public String toString() {
 		if(color == Piece.WHITE)
 			return "N";
@@ -33,8 +26,9 @@ public class Knight extends Piece {
 			return "n";
 	}
 	
+        @Override
 	public ArrayList<Move> getMoves(Board b, int x, int y) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> moves = new ArrayList<>();
 		
 		// NNE
 		if(valid(x+1, y+2) && 
