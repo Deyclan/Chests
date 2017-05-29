@@ -73,19 +73,7 @@ public class Board {
             tiles[i + 1][5] = new Tile();
         }
     }
-
-    public String toString() {
-        String str = "";
-        for (int i = 7; i >= 0; i--) {
-            str += (i + 1) + "  ";
-            for (int j = 0; j < 8; j++) {
-                str += tiles[j][i] + " ";
-            }
-            str += "\n";
-        }
-        str += "\n   a b c d e f g h";
-        return str;
-    }
+    
 
     public ArrayList<Move> getMoves(boolean color) {
         return getMoves(color, true);
@@ -275,7 +263,6 @@ public class Board {
                 tiles[a][7] = new Tile();
             }
         }
-
         // pawn at the other side ? (checks white and black sides)
         if (oldTile.getPiece().toString().equals("P") && m.getY2() == 7) {
             tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.WHITE));
@@ -283,7 +270,6 @@ public class Board {
         if (oldTile.getPiece().toString().equals("p") && m.getY2() == 0) {
             tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.BLACK));
         }
-
         return 0;
     }
 
@@ -296,5 +282,19 @@ public class Board {
     public Tile getTile(int x, int y) {
         return tiles[x][y];
     }
-
+    
+    
+    @Override
+    public String toString() {
+        String str = "";
+        for (int i = 7; i >= 0; i--) {
+            str += (i + 1) + "  ";
+            for (int j = 0; j < 8; j++) {
+                str += tiles[j][i] + " ";
+            }
+            str += "\n";
+        }
+        str += "   a b c d e f g h\n\n ";
+        return str;
+    }
 }
