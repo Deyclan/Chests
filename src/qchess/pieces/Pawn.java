@@ -1,7 +1,7 @@
-package chess.pieces;
+package qchess.pieces;
 
-import chess.Board;
-import chess.Move;
+import qchess.Board;
+import qchess.Move;
 import java.util.ArrayList;
 
 public class Pawn extends Piece {
@@ -20,29 +20,27 @@ public class Pawn extends Piece {
     public ArrayList<Move> getMoves(Board b, int x, int y) {
         ArrayList<Move> moves = new ArrayList<>();
         if (color == Piece.WHITE) {
-            // forward
-            if (insideOfBoard(x, y + 1) && !b.getTile(x, y + 1).isOccupied()) {
+            // N
+            if (insideOfBoard(x, y + 1) && !b.getSquare(x, y + 1).isInUse()) {
                 moves.add(new Move(x, y, x, y + 1));
             }
             // kill diagonally
-            if (insideOfBoard(x + 1, y + 1) && b.getTile(x + 1, y + 1).isOccupied() && b.getTile(x + 1, y + 1).getPiece().getColor() != color) {
+            if (insideOfBoard(x + 1, y + 1) && b.getSquare(x + 1, y + 1).isInUse() && b.getSquare(x + 1, y + 1).getPiece().getColor() != color) {
                 moves.add(new Move(x, y, x + 1, y + 1));
             }
-            // kill diagonally
-            if (insideOfBoard(x - 1, y + 1) && b.getTile(x - 1, y + 1).isOccupied() && b.getTile(x - 1, y + 1).getPiece().getColor() != color) {
+            if (insideOfBoard(x - 1, y + 1) && b.getSquare(x - 1, y + 1).isInUse() && b.getSquare(x - 1, y + 1).getPiece().getColor() != color) {
                 moves.add(new Move(x, y, x - 1, y + 1));
             }
         } else {
-            // forward
-            if (insideOfBoard(x, y - 1) && !b.getTile(x, y - 1).isOccupied()) {
+            // S
+            if (insideOfBoard(x, y - 1) && !b.getSquare(x, y - 1).isInUse()) {
                 moves.add(new Move(x, y, x, y - 1));
             }
             // kill diagonally
-            if (insideOfBoard(x + 1, y - 1) && b.getTile(x + 1, y - 1).isOccupied() && b.getTile(x + 1, y - 1).getPiece().getColor() != color) {
+            if (insideOfBoard(x + 1, y - 1) && b.getSquare(x + 1, y - 1).isInUse() && b.getSquare(x + 1, y - 1).getPiece().getColor() != color) {
                 moves.add(new Move(x, y, x + 1, y - 1));
             }
-            // kill diagonally
-            if (insideOfBoard(x - 1, y - 1) && b.getTile(x - 1, y - 1).isOccupied() && b.getTile(x - 1, y - 1).getPiece().getColor() != color) {
+            if (insideOfBoard(x - 1, y - 1) && b.getSquare(x - 1, y - 1).isInUse() && b.getSquare(x - 1, y - 1).getPiece().getColor() != color) {
                 moves.add(new Move(x, y, x - 1, y - 1));
             }
         }

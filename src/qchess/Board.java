@@ -1,13 +1,18 @@
-package chess;
+package qchess;
 
-import chess.pieces.*;
+import qchess.pieces.King;
+import qchess.pieces.Bishop;
+import qchess.pieces.Knight;
+import qchess.pieces.Pawn;
+import qchess.pieces.Piece;
+import qchess.pieces.Rook;
 import java.util.ArrayList;
 
 public class Board {
 
     public static final int a = 0, b = 1, c = 2, d = 3, e = 4, f = 5, g = 6, h = 7;
 
-    private Tile[][] tiles;
+    private Square[][] square;
 
     /**
      * 8  r . b . k . n .
@@ -26,51 +31,51 @@ public class Board {
 
     /**
      * Board set with number of rows/columns
-     * @param tiles
+     * @param squares
      */
-    public Board(Tile[][] tiles) {
-        this.tiles = tiles;
+    public Board(Square[][] squares) {
+        this.square = squares;
     }
 
     public Board() {
         //WHITE side
         boolean co = Piece.WHITE;
-        tiles = new Tile[8][8];
-        tiles[a][0] = new Tile(new Rook(co));
-        tiles[b][0] = new Tile();
-        tiles[c][0] = new Tile(new Bishop(co));
-        tiles[d][0] = new Tile();
-        tiles[e][0] = new Tile(new King(co));
-        tiles[f][0] = new Tile();
-        tiles[g][0] = new Tile(new Knight(co));
-        tiles[h][0] = new Tile();
+        square = new Square[8][8];
+        square[a][0] = new Square(new Rook(co));
+        square[b][0] = new Square();
+        square[c][0] = new Square(new Bishop(co));
+        square[d][0] = new Square();
+        square[e][0] = new Square(new King(co));
+        square[f][0] = new Square();
+        square[g][0] = new Square(new Knight(co));
+        square[h][0] = new Square();
         for (int i = 0; i < 8; i = i + 2) {
-            tiles[i][2] = new Tile(new Pawn(co));
-            tiles[i + 1][2] = new Tile();
-            tiles[i + 1][1] = new Tile(new Pawn(co));
-            tiles[i][1] = new Tile();
+            square[i][2] = new Square(new Pawn(co));
+            square[i + 1][2] = new Square();
+            square[i + 1][1] = new Square(new Pawn(co));
+            square[i][1] = new Square();
         }
 
         for (int i = 3; i < 5; i++) {
             for (int j = 0; j < 8; j++) {
-                tiles[j][i] = new Tile();
+                square[j][i] = new Square();
             }
         }
         //BLACK side
         co = Piece.BLACK;
-        tiles[a][7] = new Tile(new Rook(co));
-        tiles[b][7] = new Tile();
-        tiles[c][7] = new Tile(new Bishop(co));
-        tiles[d][7] = new Tile();
-        tiles[e][7] = new Tile(new King(co));
-        tiles[f][7] = new Tile();
-        tiles[g][7] = new Tile(new Knight(co));
-        tiles[h][7] = new Tile();
+        square[a][7] = new Square(new Rook(co));
+        square[b][7] = new Square();
+        square[c][7] = new Square(new Bishop(co));
+        square[d][7] = new Square();
+        square[e][7] = new Square(new King(co));
+        square[f][7] = new Square();
+        square[g][7] = new Square(new Knight(co));
+        square[h][7] = new Square();
         for (int i = 0; i < 8; i = i + 2) {
-            tiles[i + 1][6] = new Tile(new Pawn(co));
-            tiles[i][6] = new Tile();
-            tiles[i][5] = new Tile(new Pawn(co));
-            tiles[i + 1][5] = new Tile();
+            square[i + 1][6] = new Square(new Pawn(co));
+            square[i][6] = new Square();
+            square[i][5] = new Square(new Pawn(co));
+            square[i + 1][5] = new Square();
         }
     }
     
@@ -88,9 +93,9 @@ public class Board {
         int x = -1, y = -1;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (tiles[i][j].isOccupied()
-                        && tiles[i][j].getPiece().getColor() == color
-                        && tiles[i][j].getPiece().toString().equalsIgnoreCase("K")) {
+                if (square[i][j].isInUse()
+                        && square[i][j].getPiece().getColor() == color
+                        && square[i][j].getPiece().toString().equalsIgnoreCase("K")) {
                     x = i;
                     y = j;
                 }
@@ -113,21 +118,21 @@ public class Board {
      * @param moves the list of the player's next moves,
      * @return true : yes ; false : no.
      */
-    public boolean isCheckAfter(boolean color, ArrayList<Move> moves) {
-        Tile[][] newTiles = getTilesAfter(moves);
+    public boolean isNextInCheck(boolean color, ArrayList<Move> moves) {
+        Square[][] tmpSquares = getNextSquares(moves);
         int x = -1, y = -1;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (newTiles[i][j].isOccupied()
-                        && newTiles[i][j].getPiece().getColor() == color
-                        && newTiles[i][j].getPiece().toString().equalsIgnoreCase("K")) {
+                if (tmpSquares[i][j].isInUse()
+                        && tmpSquares[i][j].getPiece().getColor() == color
+                        && tmpSquares[i][j].getPiece().toString().equalsIgnoreCase("K")) {
                     x = i;
                     y = j;
                 }
             }
         }
         // check a move if after making this move the king can be killed (moving into check)
-        ArrayList<Move> opponentMoves = getMovesAfter(!color, moves, false);
+        ArrayList<Move> opponentMoves = getNextMoves(!color, moves, false);
         // check all opponent moves if they kill king (opponent moves in next round)
         for (int j = 0; j < opponentMoves.size(); j++) {
             if (opponentMoves.get(j).getX2() == x && opponentMoves.get(j).getY2() == y) {
@@ -147,9 +152,9 @@ public class Board {
         ArrayList<Move> moves = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (tiles[i][j].isOccupied()
-                        && tiles[i][j].getPiece().getColor() == color) {
-                    moves.addAll(tiles[i][j].getPiece().getMoves(this, i, j));
+                if (square[i][j].isInUse()
+                        && square[i][j].getPiece().getColor() == color) {
+                    moves.addAll(square[i][j].getPiece().getMoves(this, i, j));
                 }
             }
         }
@@ -159,34 +164,34 @@ public class Board {
             int x = -1, y = -1;
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
-                    if (tiles[i][j].isOccupied()
-                            && tiles[i][j].getPiece().getColor() == color
-                            && tiles[i][j].getPiece().toString().equalsIgnoreCase("K")) {
+                    if (square[i][j].isInUse()
+                            && square[i][j].getPiece().getColor() == color
+                            && square[i][j].getPiece().toString().equalsIgnoreCase("K")) {
                         x = i;
                         y = j;
                     }
                 }
             }
 
-            ArrayList<Move> removeThese = new ArrayList<>();
+            ArrayList<Move> badMoves = new ArrayList<>();
             for (int i = 0; i < moves.size(); i++) {
                 // check if move creates a check
-                ArrayList<Move> checkThis = new ArrayList<>(moves.subList(i, i + 1));
-                ArrayList<Move> opponentMoves = getMovesAfter(!color, checkThis, false);
+                ArrayList<Move> checkMove = new ArrayList<>(moves.subList(i, i + 1));
+                ArrayList<Move> opponentMoves = getNextMoves(!color, checkMove, false);
                 int xUpdated = x, yUpdated = y;
-                if (checkThis.get(0).getX1() == x && checkThis.get(0).getY1() == y) { // get updated king position
-                    xUpdated = checkThis.get(0).getX2();
-                    yUpdated = checkThis.get(0).getY2();
+                if (checkMove.get(0).getX1() == x && checkMove.get(0).getY1() == y) { // get updated king position
+                    xUpdated = checkMove.get(0).getX2();
+                    yUpdated = checkMove.get(0).getY2();
                 }
 
                 // check all opponent moves if they kill king (opponent moves in next round)
                 for (int j = 0; j < opponentMoves.size(); j++) {
                     if (opponentMoves.get(j).getX2() == xUpdated && opponentMoves.get(j).getY2() == yUpdated) {
-                        removeThese.add(checkThis.get(0));
+                        badMoves.add(checkMove.get(0));
                     }
                 }
             }
-            moves.removeAll(removeThese); // remove invalid moves
+            moves.removeAll(badMoves); // remove invalid moves
         }
         return moves;
     }
@@ -197,48 +202,48 @@ public class Board {
      * @param moves list of moves
      * @return list of moves
      */
-    public ArrayList<Move> getMovesAfter(boolean color, ArrayList<Move> moves) {
-        return getMovesAfter(color, moves, true);
+    public ArrayList<Move> getNextMoves(boolean color, ArrayList<Move> moves) {
+        return getNextMoves(color, moves, true);
     }
 
-    public ArrayList<Move> getMovesAfter(boolean color, ArrayList<Move> moves, boolean checkCheck) {
-        Tile[][] temp = new Tile[8][8];
+    public ArrayList<Move> getNextMoves(boolean color, ArrayList<Move> moves, boolean checkCheck) {
+        Square[][] temp = new Square[8][8];
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                temp[x][y] = new Tile(this.tiles[x][y]);
+                temp[x][y] = new Square(this.square[x][y]);
             }
         }
         Board b = new Board(temp);
         for (int i = 0; i < moves.size(); i++) {
             b.makeMove(moves.get(i));
         }
-        ArrayList<Move> futureMoves = b.getMoves(color, checkCheck);
-        return futureMoves;
+        ArrayList<Move> nextMoves = b.getMoves(color, checkCheck);
+        return nextMoves;
     }
 
     /**
      * Gets the board after having done one move
      * @param moves the list of moves to simulate
-     * @return the tiles of the board
+     * @return the square of the board
      */
-    public Tile[][] getTilesAfter(ArrayList<Move> moves) {
-        Tile[][] temp = new Tile[8][8];
+    public Square[][] getNextSquares(ArrayList<Move> moves) {
+        Square[][] tmpSquares = new Square[8][8];
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                temp[x][y] = new Tile(this.tiles[x][y]);
+                tmpSquares[x][y] = new Square(this.square[x][y]);
             }
         }
-        Board b = new Board(temp);
+        Board b = new Board(tmpSquares);
         for (int i = 0; i < moves.size(); i++) {
             b.makeMove(moves.get(i));
         }
-        Tile[][] temp2 = new Tile[8][8];
+        Square[][] tmpSquares2 = new Square[8][8];
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                temp2[x][y] = new Tile(b.getTile(x, y));
+                tmpSquares2[x][y] = new Square(b.getSquare(x, y));
             }
         }
-        return temp2;
+        return tmpSquares2;
     }
 
     /**
@@ -247,40 +252,40 @@ public class Board {
      * @return -1 if black wins 1 if white wins 0 if game continues
      */
     public int makeMove(Move m) {
-        Tile oldTile = tiles[m.getX1()][m.getY1()];
+        Square preSquare = square[m.getX1()][m.getY1()];
 
-        tiles[m.getX2()][m.getY2()] = tiles[m.getX1()][m.getY1()];
-        tiles[m.getX1()][m.getY1()] = new Tile();
+        square[m.getX2()][m.getY2()] = square[m.getX1()][m.getY1()];
+        square[m.getX1()][m.getY1()] = new Square();
 
         // checks for castling move
         if (m.isCastling()) {
             if (m.getX2() == c && m.getY2() == 0) {
-                tiles[d][0] = tiles[a][0];
-                tiles[a][0] = new Tile();
+                square[d][0] = square[a][0];
+                square[a][0] = new Square();
             }
             if (m.getX2() == c && m.getY2() == 7) {
-                tiles[d][7] = tiles[a][7];
-                tiles[a][7] = new Tile();
+                square[d][7] = square[a][7];
+                square[a][7] = new Square();
             }
         }
         // pawn at the other side ? (checks white and black sides)
-        if (oldTile.toString().equals("P") && m.getY2() == 7) {
-            tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.WHITE));
+        if (preSquare.toString().equals("P") && m.getY2() == 7) {
+            square[m.getX2()][m.getY2()] = new Square(new Knight(Piece.WHITE));
         }
-        if (oldTile.toString().equals("p") && m.getY2() == 0) {
-            tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.BLACK));
+        if (preSquare.toString().equals("p") && m.getY2() == 0) {
+            square[m.getX2()][m.getY2()] = new Square(new Knight(Piece.BLACK));
         }
         return 0;
     }
 
     /**
-     * Getter for tile (position)
+     * Getter for square (position)
      * @param x row
      * @param y column
-     * @return tile
+     * @return square
      */
-    public Tile getTile(int x, int y) {
-        return tiles[x][y];
+    public Square getSquare(int x, int y) {
+        return square[x][y];
     }
     
     
@@ -290,7 +295,7 @@ public class Board {
         for (int i = 7; i >= 0; i--) {
             str += (i + 1) + "  ";
             for (int j = 0; j < 8; j++) {
-                str += tiles[j][i] + " ";
+                str += square[j][i] + " ";
             }
             str += "\n";
         }

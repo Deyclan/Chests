@@ -1,7 +1,9 @@
-package chess;
+package qchess;
 
-import chess.player.*;
-import chess.pieces.*;
+import qchess.pieces.Piece;
+import qchess.players.AIPlayer;
+import qchess.players.HumanPlayer;
+import qchess.players.Player;
 import java.util.Scanner;
 
 /*
@@ -12,7 +14,7 @@ import java.util.Scanner;
 * Checkmate: When a king is in check and can’t perform any of the preceding moves, it has been checkmated. If your king is checkmated, you lose the game. The term checkmate is commonly shortened to simply mate.
 * Stalemate: Stalemate is the relatively rare situation when a player whose king isn’t in check has no legal move to make. Stalemate is considered a draw. Neither player wins, but the game is over.
  */
-public class Chess {
+public class QChess {
     
 
     public static void main(String[] args) {
@@ -21,11 +23,11 @@ public class Chess {
                     + "Choose your difficulty from easy (1) to extreme (4 -average time 3sec) !");
             Scanner sc = new Scanner(System.in);
             int difficulty = sc.nextInt();
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE, difficulty);
-            Player player2 = new Human(Piece.BLACK);
+            Player p1 = new AIPlayer(Piece.WHITE, difficulty);
+            Player p2 = new HumanPlayer(Piece.BLACK);
             System.out.println("\nPlayer 1 - WHITE (bottom) - AIPlayer");
             System.out.println("Player 2 - BLACK (top) - HumanPlayer\n");
-            int winner = play(player1, player2, board);
+            int winner = run(p1, p2, board);
         switch (winner) {
             case 1:
                 System.out.println("Player 1 won");
@@ -45,9 +47,9 @@ public class Chess {
      * @param player1 the player 1
      * @param player2 the player 2
      * @param b the chess board
-     * @return 1 if player1 wins, 0 if draw, -1 if player2 wins
+     * @return 1 if p1 wins, 0 if draw, -1 if p2 wins
      */
-    public static int play(Player player1, Player player2, Board b) {
+    public static int run(Player player1, Player player2, Board b) {
         Move move;
         int result;
         int turn = 0;

@@ -1,4 +1,4 @@
-package chess;
+package qchess;
 
 public class Move {
     
@@ -32,11 +32,5 @@ public class Move {
         @Override
 	public String toString(){
 		return (char)('A'+x1) + "" + (y1+1) + " " + (char)('A'+x2) + "" + (y2+1);
-	}
-	
-        @Override
-	public boolean equals(Object o){
-            Move op = (Move) o;		
-            return op.getX1() == x1 && op.getY1() == y1 && op.getX2() == x2 && op.getY2() == y2;
 	}
 }

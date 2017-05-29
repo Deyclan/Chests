@@ -1,25 +1,19 @@
-package chess.player;
+package qchess.players;
 
 import java.util.ArrayList;
-import chess.Move;
-import chess.Board;
+import qchess.Move;
+import qchess.Board;
 import java.util.Scanner;
 
-public class Human extends Player {
+public class HumanPlayer extends Player {
     Scanner sc = new Scanner(System.in);
     String srcx, srcy, destx,desty;
 
-    public Human(boolean color) {
+    
+    public HumanPlayer(boolean color) {
         super(color);
     }
 
-    /**
-     * Function to prompt the player to make a move after the first move has
-     * already been made
-     *
-     * @param b the board to parse
-     * @return the selected move
-     */
     @Override
     public Move getNextMove(Board b) {
         ArrayList<Move> moves = b.getMoves(color);
@@ -44,6 +38,9 @@ public class Human extends Player {
         return null;
     }
     
+    /*
+    * Function in order to analyse the human player input
+    */
     private int analyseInput(String character){
         character = character.toUpperCase();
         int result = 0;

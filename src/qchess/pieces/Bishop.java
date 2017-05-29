@@ -1,7 +1,8 @@
-package chess.pieces;
+package qchess.pieces;
 
+import qchess.Board;
+import qchess.Move;
 import java.util.ArrayList;
-import chess.*;
 
 public class Bishop extends Piece {
 
@@ -22,8 +23,8 @@ public class Bishop extends Piece {
         // NE
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x + i, y + i)) {
-                if (b.getTile(x + i, y + i).isOccupied()) {
-                    if (b.getTile(x + i, y + i).getPiece().color != color)
+                if (b.getSquare(x + i, y + i).isInUse()) {
+                    if (b.getSquare(x + i, y + i).getPiece().color != color)
                         moves.add(new Move(x, y, x + i, y + i));
                     break;
                 } else
@@ -33,8 +34,8 @@ public class Bishop extends Piece {
         // NW
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x - i, y + i)) {
-                if (b.getTile(x - i, y + i).isOccupied()) {
-                    if (b.getTile(x - i, y + i).getPiece().color != color)
+                if (b.getSquare(x - i, y + i).isInUse()) {
+                    if (b.getSquare(x - i, y + i).getPiece().color != color)
                         moves.add(new Move(x, y, x - i, y + i));
                     break;
                 } else
@@ -44,8 +45,8 @@ public class Bishop extends Piece {
         // SE
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x + i, y - i)) {
-                if (b.getTile(x + i, y - i).isOccupied()) {
-                    if (b.getTile(x + i, y - i).getPiece().color != color)
+                if (b.getSquare(x + i, y - i).isInUse()) {
+                    if (b.getSquare(x + i, y - i).getPiece().color != color)
                         moves.add(new Move(x, y, x + i, y - i));
                     break;
                 } else
@@ -55,8 +56,8 @@ public class Bishop extends Piece {
         // SW
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x - i, y - i)) {
-                if (b.getTile(x - i, y - i).isOccupied()) {
-                    if (b.getTile(x - i, y - i).getPiece().color != color)
+                if (b.getSquare(x - i, y - i).isInUse()) {
+                    if (b.getSquare(x - i, y - i).getPiece().color != color)
                         moves.add(new Move(x, y, x - i, y - i));
                     break;
                 } else

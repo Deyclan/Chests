@@ -1,7 +1,7 @@
-package chess.pieces;
+package qchess.pieces;
 
-import chess.Board;
-import chess.Move;
+import qchess.Board;
+import qchess.Move;
 import java.util.ArrayList;
 
 public abstract class Piece {

@@ -1,5 +1,5 @@
 
-package chess.minimax;
+package qchess.algo;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -9,10 +9,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import chess.Board;
-import chess.Move;
-import chess.Tile;
-import chess.pieces.Piece;
+import qchess.Board;
+import qchess.Move;
+import qchess.Square;
+import qchess.pieces.Piece;
 
 
 public class MinimaxAlphaBeta {
@@ -31,7 +31,7 @@ public class MinimaxAlphaBeta {
 		if(depth > maxDepth)
 			return eval1(b, state, color);
 		
-		ArrayList<Move> moves = b.getMovesAfter(color, state);
+		ArrayList<Move> moves = b.getNextMoves(color, state);
 		if(moves.isEmpty()) // TODO add draw
 			return Float.NEGATIVE_INFINITY;
 		
@@ -60,7 +60,7 @@ public class MinimaxAlphaBeta {
 		if(depth > maxDepth)
 			return eval1(b, state, !color);
 		
-		ArrayList<Move> moves = b.getMovesAfter(!color, state);
+		ArrayList<Move> moves = b.getNextMoves(!color, state);
 		if(moves.isEmpty()) // TODO add draw
 			return Float.POSITIVE_INFINITY;
 		
@@ -174,13 +174,13 @@ public class MinimaxAlphaBeta {
 	}
 	
 	private float eval2(Board b, ArrayList<Move> moves, boolean currentColor) {
-		Tile[][] tiles = b.getTilesAfter(moves);
+		Square[][] tiles = b.getNextSquares(moves);
 		
 		// check if king missing
 		boolean blackKing = false, whiteKing = false;
 		for(int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++) {
-				if(tiles[i][j].isOccupied()) {
+				if(tiles[i][j].isInUse()) {
 					if(tiles[i][j].getPiece().toString().equals("K")) {
 						whiteKing = true;
 					}
@@ -211,7 +211,7 @@ public class MinimaxAlphaBeta {
 		
 		for(int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++) {
-				if(tiles[i][j].isOccupied())
+				if(tiles[i][j].isInUse())
 					if(tiles[i][j].getPiece().getColor() == Piece.WHITE)
 						whiteScore += tiles[i][j].getPiece().getValue();
 					else
@@ -227,10 +227,10 @@ public class MinimaxAlphaBeta {
 	
 	
 	private float eval1(Board b, ArrayList<Move> moves, boolean currentColor) {
-		Tile[][] tiles = b.getTilesAfter(moves);
+		Square[][] tiles = b.getNextSquares(moves);
 		
 		if(b.getMoves(currentColor).isEmpty()) {
-			if(b.isCheckAfter(currentColor, moves))
+			if(b.isNextInCheck(currentColor, moves))
 				return (currentColor == this.color) ? Float.NEGATIVE_INFINITY : Float.POSITIVE_INFINITY;
 			else
 				return Float.NEGATIVE_INFINITY; // we don't like draws
@@ -241,7 +241,7 @@ public class MinimaxAlphaBeta {
 		
 		for(int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++) {
-				if(tiles[i][j].isOccupied())
+				if(tiles[i][j].isInUse())
 					if(tiles[i][j].getPiece().getColor() == Piece.WHITE)
 						whiteScore += tiles[i][j].getPiece().getValue();
 					else

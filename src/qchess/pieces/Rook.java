@@ -1,8 +1,8 @@
-package chess.pieces;
+package qchess.pieces;
 
 import java.util.ArrayList;
-import chess.Board;
-import chess.Move;
+import qchess.Board;
+import qchess.Move;
 
 public class Rook extends Piece {
 
@@ -20,45 +20,44 @@ public class Rook extends Piece {
     @Override
     public ArrayList<Move> getMoves(Board b, int x, int y) {
         ArrayList<Move> moves = new ArrayList<>();
-
-        // up
+        // N
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x, y + i)) {
-                if (b.getTile(x, y + i).isOccupied()) {
-                    if (b.getTile(x, y + i).getPiece().color != color)
+                if (b.getSquare(x, y + i).isInUse()) {
+                    if (b.getSquare(x, y + i).getPiece().color != color)
                         moves.add(new Move(x, y, x, y + i));
                     break;
                 } else
                     moves.add(new Move(x, y, x, y + i));
             }
         }
-        // down
+        // S
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x, y - i)) {
-                if (b.getTile(x, y - i).isOccupied()) {
-                    if (b.getTile(x, y - i).getPiece().color != color)
+                if (b.getSquare(x, y - i).isInUse()) {
+                    if (b.getSquare(x, y - i).getPiece().color != color)
                         moves.add(new Move(x, y, x, y - i));
                     break;
                 } else
                     moves.add(new Move(x, y, x, y - i));
             }
         }
-        // left
+        // W
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x - i, y)) {
-                if (b.getTile(x - i, y).isOccupied()) {
-                    if (b.getTile(x - i, y).getPiece().color != color)
+                if (b.getSquare(x - i, y).isInUse()) {
+                    if (b.getSquare(x - i, y).getPiece().color != color)
                         moves.add(new Move(x, y, x - i, y));
                     break;
                 } else
                     moves.add(new Move(x, y, x - i, y));
             }
         }
-        // right
+        // E
         for (int i = 1; i < 8; i++) {
             if (insideOfBoard(x + i, y)) {
-                if (b.getTile(x + i, y).isOccupied()) {
-                    if (b.getTile(x + i, y).getPiece().color != color)
+                if (b.getSquare(x + i, y).isInUse()) {
+                    if (b.getSquare(x + i, y).getPiece().color != color)
                         moves.add(new Move(x, y, x + i, y));
                     break;
                 } else
