@@ -22,12 +22,26 @@ public class Human extends Player {
      */
     @Override
     public Move getNextMove(Board b) {
-        System.out.println("What piece you'd like to move? (letter first, press enter than number)");
+        ArrayList<Move> moves = b.getMoves(color);
+        System.out.println("Little help of moves you can do ;) : ");
+        System.out.println(moves);
+        int n = moves.size();
+        if (n == 0) {
+            return null;
+        }
+        System.out.println("\nWhat piece you'd like to move? (letter first, press enter than number)");
         srcx = sc.next();srcy = sc.next();
         System.out.println("Where you'd like to move that piece? (same as before)");
         destx = sc.next(); desty = sc.next();
+        System.out.println();
         Move userMove = new Move(analyseInput(srcx), Integer.parseInt(srcy)-1, analyseInput(destx), Integer.parseInt(desty)-1);
-        return userMove;
+        for (Move move: moves){
+            if (moves.contains(userMove))
+                return userMove;
+        }
+        System.out.println("Sorry, you can't make this move (see helper) \n");
+        this.getNextMove(b);
+        return null;
     }
     
     private int analyseInput(String character){

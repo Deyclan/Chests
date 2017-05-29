@@ -2,6 +2,7 @@ package chess;
 
 import chess.player.*;
 import chess.pieces.*;
+import java.util.Scanner;
 
 /*
  * Check: An attack on a king by either an opposing piece or an opposing pawn is called check. When in check, a player must do one of the following:
@@ -12,11 +13,18 @@ import chess.pieces.*;
 * Stalemate: Stalemate is the relatively rare situation when a player whose king isn’t in check has no legal move to make. Stalemate is considered a draw. Neither player wins, but the game is over.
  */
 public class Chess {
+    
 
     public static void main(String[] args) {
             Board board = new Board();
-            Player player1 = new AlphaBetaPlayer(Piece.WHITE, 4);
+            System.out.println("Want to play chess? "
+                    + "Choose your difficulty from easy (1) to extreme (4 -average time 3sec) !");
+            Scanner sc = new Scanner(System.in);
+            int difficulty = sc.nextInt();
+            Player player1 = new AlphaBetaPlayer(Piece.WHITE, difficulty);
             Player player2 = new Human(Piece.BLACK);
+            System.out.println("\nPlayer 1 - WHITE (bottom) - AIPlayer");
+            System.out.println("Player 2 - BLACK (top) - HumanPlayer\n");
             int winner = play(player1, player2, board);
         switch (winner) {
             case 1:
@@ -55,8 +63,6 @@ public class Chess {
 
             result = b.makeMove(move);
             System.out.println(b);
-            //if(result == -1) return (player1.getColor() == Piece.WHITE) ? -1 : 1; // black wins
-            //if(result == 1) return (player1.getColor() == Piece.WHITE) ? 1 : -1; // white wins
 
             move = player2.getNextMove(b);
             if (move == null && b.isCheck(player2.getColor())) // check and can't move
@@ -65,9 +71,7 @@ public class Chess {
                 return 0;
 
             result = b.makeMove(move);
-            System.out.println(b);
-            //if(result == -1) return (player1.getColor() == Piece.WHITE) ? 1 : -1; // black wins
-            //if(result == 1) return (player1.getColor() == Piece.WHITE) ? -1 : 1; // white wins			
+            System.out.println(b);			
         }
     }
 }
