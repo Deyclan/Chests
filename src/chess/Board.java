@@ -153,7 +153,7 @@ public class Board {
                 }
             }
         }
-        // check if move is valid (must not be check after move) and throw away erroneous moves
+        // check if move is insideOfBoard (must not be check after move) and throw away erroneous moves
         if (checkCheck) {
             // find king (of correct color)
             int x = -1, y = -1;
@@ -264,10 +264,10 @@ public class Board {
             }
         }
         // pawn at the other side ? (checks white and black sides)
-        if (oldTile.getPiece().toString().equals("P") && m.getY2() == 7) {
+        if (oldTile.toString().equals("P") && m.getY2() == 7) {
             tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.WHITE));
         }
-        if (oldTile.getPiece().toString().equals("p") && m.getY2() == 0) {
+        if (oldTile.toString().equals("p") && m.getY2() == 0) {
             tiles[m.getX2()][m.getY2()] = new Tile(new Knight(Piece.BLACK));
         }
         return 0;

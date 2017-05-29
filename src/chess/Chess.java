@@ -16,7 +16,7 @@ public class Chess {
     public static void main(String[] args) {
             Board board = new Board();
             Player player1 = new AlphaBetaPlayer(Piece.WHITE, 4);
-            Player player2 = new AlphaBetaPlayer(Piece.BLACK, 0);
+            Player player2 = new Human(Piece.BLACK);
             int winner = play(player1, player2, board);
         switch (winner) {
             case 1:
