@@ -10,18 +10,17 @@ public class Board {
 	private Tile[][] tiles;
 	/**	
 	 * 	 8  r . b . k . n . 
-	 *	 7  . p . p . p . p 
+	 *	 7  . p . p . p . p     black pieces
 	 *	 6  p . p . p . p . 
 	 *	 5  . . . . . . . . 
 	 *	 4  . . . . . . . . 
 	 *	 3  P . P . P . P . 
-	 *	 2  . P . P . P . P 
-	 *	 1  R . B . K . N .
+	 *	 2  . P . P . P . P     WHITE PIECES
+	 *	 1  R . B . K . N .      
 	 *    	
 	 *          a b c d e f g h
 	 *    
-	 * P=pawn, K=king, Q=queen, R=rook, N=knight, B=Bishop
-	 * Uppercase is white
+	 * P=pawn, K=king, R=rook, N=knight, B=Bishop
 	 */
 	
 	public Board(Tile[][] tiles) {
@@ -30,8 +29,7 @@ public class Board {
 
 
 	public Board() {
-		// initialize board
-                //WHITE
+                //WHITE side
 		boolean co = Piece.WHITE;
 		tiles = new Tile[8][8];
 		tiles[a][0] = new Tile(new Rook(co));
@@ -55,7 +53,7 @@ public class Board {
 				tiles[j][i] = new Tile();
 			}
 		}
-		//BLACK
+		//BLACK side
 		co = Piece.BLACK;
 		tiles[a][7] = new Tile(new Rook(co));
                 tiles[b][7] = new Tile();
@@ -96,7 +94,7 @@ public class Board {
 	
 	
 	/**
-	 * Checks if player color is under check
+	 * Checks if player color is under check at the moment
 	 * 
 	 * @param color
 	 * @return
@@ -125,10 +123,11 @@ public class Board {
 	}
 	
 	/**
-	 * Checks if player color is under check
+	 * Checks if player color is under check in the next move
 	 * 
-	 * @param color
-	 * @return
+	 * @param color of the player, 
+         * @param moves the list of the player's next moves,
+	 * @return true : yes ; false : no.
 	 */
 	public boolean isCheckAfter(boolean color, ArrayList<Move> moves) {
 		
@@ -157,7 +156,7 @@ public class Board {
 	}
 	
 	public ArrayList<Move> getMoves(boolean color, boolean checkCheck) {
-		ArrayList<Move> moves = new ArrayList<Move>();
+		ArrayList<Move> moves = new ArrayList<>();
 		
 		for(int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++) {
@@ -180,10 +179,10 @@ public class Board {
 					}
 				}
 			
-			ArrayList<Move> removeThese = new ArrayList<Move>();
+			ArrayList<Move> removeThese = new ArrayList<>();
 			for(int i = 0; i < moves.size(); i++) {
 				// check a move if after making this move the king can be killed (moving into check)
-				ArrayList<Move> checkThis = new ArrayList<Move>(moves.subList(i, i+1));
+				ArrayList<Move> checkThis = new ArrayList<>(moves.subList(i, i+1));
 				ArrayList<Move> opponentMoves = getMovesAfter(!color, checkThis, false);
 				
 				int xUpdated = x, yUpdated = y;
